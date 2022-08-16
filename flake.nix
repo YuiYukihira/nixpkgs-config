@@ -6,7 +6,7 @@
         nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
         home-manager.url = "github:nix-community/home-manager";
         home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    }
+    };
 
     outputs = { self, home-manager, nixpkgs, utils }:
         let
@@ -15,11 +15,17 @@
             };
 
             mkHomeConfiguration = args: home-manager.lib.homeManagerConfiguration (rec {
-                system = args.system or "x86_64-linux";
-                configuration = import ./home.nix;
-                homeDirectiory = "/home/lucy";
-                username = "lucy";
-                pkgs = pkgsForSystem system;
+                pkgs = pkgsForSystem (args.system or "x86_64-linux");
+                modules = [
+                    ./home.nix
+                    {
+                        home = {
+                            username = "lucy";
+                            homeDirectory = "/home/lucy";
+                            stateVersion = "22.05";
+                        };
+                    }
+                ];
             } // args);
 
         in utils.lib.eachSystem [ "x86_64-linux" ] (system: rec {

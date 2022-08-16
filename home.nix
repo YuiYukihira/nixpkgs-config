@@ -19,8 +19,7 @@ in
 
     services.picom = mkIf withGUI {
         enable = true;
-        inactiveOpacity = "0.8";
-        inactiveDim = "0.15";
+        inactiveOpacity = 0.8;
         fadeExclude = [
             "window_type *= 'menu'"
             "name ~= 'Firefox\$'"
@@ -32,7 +31,7 @@ in
     services.polybar = mkIf withGUI {
         enable = true;
         package = pkgs.polybarFull;
-        config = pkgs.substitueAll {
+        config = pkgs.substituteAll {
             src = ./polybar-config;
             interface = networkInterface;
         };
@@ -41,6 +40,27 @@ in
                 MONITOR=$m polybar nord &
             done
         '';
+    };
+
+    xdg.configFile."rofi/colors".source = ./rofi/colors;
+    xdg.configFile."rofi/themes".source = ./rofi/themes;
+
+    programs.rofi = {
+        enable = true;
+        font = "FiraCode NF 12";
+        theme = "themes/rofi";
+        plugins = [
+            pkgs.rofi-emoji
+            pkgs.rofi-calc
+            pkgs.rofi-power-menu
+        ];
+
+        extraConfig = {
+            modi = "drun,filebrowser,window";
+            show-icons = true;
+            sort = true;
+            matching = "fuzzy";
+        };
     };
 
     services.lorri.enable = isLinux;
@@ -81,7 +101,7 @@ in
     xdg.enable = true;
 
     xsession = mkIf withGUI {
-        enable = true;
+        enable = true; 
         windowManager.i3 = rec {
             enable = true;
             package = pkgs.i3-gaps;
@@ -96,8 +116,24 @@ in
                     smartBorders = "off";
                 };
 
+                startup = [
+                    { command = "systemctl --user restart polybar"; always = true; notification = false; }
+                ];
+
                 keybindings = import ./i3-keybindings.nix config.modifier;
             };
+        };
+    };
+
+
+    home.file = {
+        ".config/starship.toml".source = ./starship.toml;
+
+        ".config/nvim".source = pkgs.fetchFromGitHub {
+            owner = "AstroNvim";
+            repo = "AstroNvim";
+            rev = "8782b1a";
+            sha256 = "f7c7de1ac9bd8db2b2a462d95cabc5e2d021abb49fd6281086d517ecd20a3be4";
         };
     };
 }

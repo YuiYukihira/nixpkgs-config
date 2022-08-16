@@ -1,4 +1,4 @@
-pkgs: withGui: with pkgs; [
+pkgs: withGUI: with pkgs; [
     # these files are meant to be installed in all scenarios
     bat
     binutils
@@ -27,9 +27,9 @@ pkgs: withGui: with pkgs; [
     nodejs
     xclip
 
-] ++ pkgs.lib.optionals WithGUI [
+] ++ pkgs.lib.optionals withGUI [
     brightnessctl
-    enlightment.terminology
+    enlightenment.terminology
     firefox
     pavucontrol
 

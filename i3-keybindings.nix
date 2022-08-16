@@ -1,7 +1,7 @@
 
 mod:
 {
-  "${mod}+w" = "exec firefox";;
+  "${mod}+w" = "exec firefox";
   "${mod}+Return" = "exec alacritty";
   "${mod}+Shift+Return" = "exec xterm";
   "${mod}+c" = "kill";
@@ -11,6 +11,8 @@ mod:
   "XF86AudioRaiseVolume" = "exec amixer -q sset Master 10%+";
   "XF86AudioLowerVolume" = "exec amixer -q sset Master 10%-";
   "XF86AudioMute" = "exec amixer -q sset Master toggle";
+
+  "${mod}+Shift+space" = "exec rofi -show drun";
 
   "${mod}+Shift+grave" = "move scratchpad";
   "${mod}+grave" = "scratchpad show";

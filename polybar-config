@@ -56,7 +56,7 @@ font-0 = TerminessTTF Nerd Font:weight=bold:size=10;2
 ;	     MODULES LAYOUT
 ;---------------------------------------
 modules-left = i3
-modules-right = lan cpu memory pipewire storage battery date
+modules-right = lan cpu memory storage date
 modules-center = xwindow
 
 ;---------------------------------------
@@ -125,32 +125,6 @@ format-padding = 1
 format-underline = ${colors.cyan1}
 
 ;---------------------------------------
-;	     MPD
-;---------------------------------------
-[module/mpd]
-type = internal/mpd
-host = 127.0.0.1
-port = 6600
-format-online = <toggle> <label-song>
-;alt icons = 
-format-online-background = ${colors.blue}
-format-online-foreground = ${colors.black}
-format-online-padding = 1
-icon-play = 
-;icon-prev = 
-;icon-next = 
-icon-pause = 
-label-song =  "%{A1:mpc next && mpdfy:}%title:0:40:...%%{A}"
-label-song-ellipsis = true
-;bar-progress-width = 13
-;bar-progress-indicator = ⊙
-;bar-progress-fill = ━
-;bar-progress-empty = ─
-label-offline = mpd is offline
-format-online-underline = ${colors.blue1}
-format-offline-underline = ${colors.white}
-
-;---------------------------------------
 ;	     WORKSPACE
 ;---------------------------------------
 [module/i3]
@@ -199,17 +173,6 @@ format-padding = 5
 label = %title:0:50:...%
 
 ;---------------------------------------
-;	   XBACKLIGHT
-;---------------------------------------
-[module/xbacklight]
-type = internal/xbacklight
-format = <label>
-format-foreground = ${colors.black}
-format-background = ${colors.orange}
-label = " 盛 %percentage%% "
-format-underline = ${colors.orange1}
-
-;---------------------------------------
 ;	   DATE
 ;---------------------------------------
 [module/date]
@@ -221,67 +184,3 @@ label = "%{A1:gsimplecal:}  %date%   %time% %{A}"
 format-foreground = ${colors.white}
 format-background = ${colors.black}
 format-underline = ${colors.black}
-
-;---------------------------------------
-;	   VOLUME
-;---------------------------------------
-[module/pipewire]
-type = custom/script
-label = "%output%"
-label-font = 2
-interval = 1.0
-exec = ~/.config/polybar/pipewire.sh
-click-right = exec pavucontrol &
-click-left = ~/.config/polybar/pipewire.sh mute &
-scroll-up = ~/.config/polybar/pipewire.sh up &
-scroll-down = ~/.config/polybar/pipewire.sh down &
-format-volume = <ramp-volume><label-volume>
-format-volume-foreground = ${colors.black}
-format-volume-background = ${colors.yellow}
-label-volume = "%percentage% "
-label-volume-foreground = ${colors.black}
-label-volume-background = ${colors.yellow}
-label-muted = "  mute "
-label-muted-foreground = ${colors.black}
-label-muted-background = ${colors.yellow}
-label-muted-underline = ${colors.yellow1}
-ramp-volume-0 = "  "
-ramp-volume-0-foreground = ${colors.black}
-ramp-volume-0-background = ${colors.yellow}
-ramp-volume-1 = "  "
-ramp-volume-1-foreground = ${colors.black}
-ramp-volume-1-background = ${colors.yellow}
-ramp-volume-2 = "  "
-ramp-volume-2-foreground = ${colors.black}
-ramp-volume-2-background = ${colors.yellow}
-ramp-volume-3 = "  "
-ramp-volume-3-foreground = ${colors.black}
-ramp-volume-3-background = ${colors.yellow}
-format-volume-underline = ${colors.yellow1}
-
-;---------------------------------------
-;	   BATTERY
-;---------------------------------------
-
-[module/battery]
-type = internal/battery
-battery = BAT0
-adapter = ADP1
-full-at = 99
-format-charging = <label-charging>
-format-charging-foreground = ${colors.black}
-format-charging-background = ${colors.red}
-format-full = <label-full>
-format-full-foreground = ${colors.black}
-format-full-background = ${colors.red}
-format-discharging = <label-discharging>
-format-discharging-foreground = ${colors.black}
-format-discharging-background = ${colors.red}
-label-charging = "  %percentage%% "
-label-discharging ="  %percentage%% "
-label-discharging-foreground = ${colors.black}
-label-full = "  %percentage%% "
-
-format-charging-underline = ${colors.red1}
-format-discharging-underline = ${colors.red1}
-format-full-underline = ${colors.red1}
